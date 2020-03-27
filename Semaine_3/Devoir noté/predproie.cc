@@ -4,6 +4,7 @@ using namespace std;
 
 int main()
 {
+  cout << "Test new branch";
   // Réduire le format d'affichage
   cout << setprecision(4);
 
