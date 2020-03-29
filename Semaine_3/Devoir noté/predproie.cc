@@ -1,6 +1,3 @@
-// ProiePredateur.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
-//
-
 #include <iostream>
 #include <iomanip> // pour setprecision()
 using namespace std;
@@ -23,8 +20,6 @@ int main()
 	/*****************************************************
 	 * ComplÃ©ter le code Ã  partir d'ici
 	 *****************************************************/
-	double taux_attaque_initial(0.0);
-	double taux_attaque_final(0.0);
 
 	// ===== PARTIE 1 =====
 	// Saisie des populations initiales
@@ -44,6 +39,46 @@ int main()
 	// PremiÃ¨re simulation
 	// Boucle pour la partie 3
 
+	cout << endl << "***** Le taux d'attaque vaut " << taux_attaque*100 << "%" << endl;
+	double nb_renards(renards_i);
+	double nb_lapins(lapins_i);
+	double n_nb_lapins(0);
+	double n_nb_renards(0);
+	bool sortie(true);
+	int mois(0);
+	//Calculs
+
+	for (int i(1); sortie && i <= duree; ++i) {
+		mois = i;
+
+		//Calculs des nouvelles populations
+		n_nb_lapins = nb_lapins * (1.0 + taux_croissance_lapins - taux_attaque * nb_renards);
+		if (n_nb_lapins < 0)
+		{
+			n_nb_lapins = 0;
+		}
+		n_nb_renards = nb_renards * (1.0 + taux_attaque * nb_lapins * taux_croissance_renards - taux_mortalite);
+		if (n_nb_renards < 0)
+		{
+			n_nb_renards = 0;
+		}
+		nb_lapins = n_nb_lapins;
+		nb_renards = n_nb_renards;
+		//cout << "apres " << i << " mois, il y a " << nb_lapins << " lapins et " << nb_renards << " renards" << endl;  
+
+		{
+			cout << "apres " << mois << " mois, il y a " << nb_lapins << " lapins et " << nb_renards << " renards" << endl;
+		}
+	}
+
+
+
+	// ===== PARTIE 3 =====
+	// Variation du taux d'attaque
+	cout << endl;
+	//Affichage des resultats
+	double taux_attaque_initial(0.0);
+	double taux_attaque_final(0.0);
 	//Recupere le taux d"attaque
 	do {
 		cout << "taux d'attaque au départ en % (entre 0.5 et 6) ? ";
@@ -60,6 +95,7 @@ int main()
 	taux_attaque_initial = taux_attaque_initial / 100;
 	taux_attaque_final = taux_attaque_final / 100;
 
+
 	for (double j(taux_attaque_initial); j < taux_attaque_final; j = j + taux_attaque)
 	{
 		bool extinction_lapin(false);
@@ -69,7 +105,7 @@ int main()
 		bool disparition_lapin(false);
 		bool disparition_renard(false);
 
-		cout << endl << "***** Le taux d'attaque vaut " << j*100 << "%" << endl;
+		cout << endl << "***** Le taux d'attaque vaut " << j * 100 << "%" << endl;
 		double nb_renards(renards_i);
 		double nb_lapins(lapins_i);
 		double n_nb_lapins(0);
@@ -142,49 +178,39 @@ int main()
 				cout << "apres " << mois << " mois, il y a " << nb_lapins << " lapins et " << nb_renards << " renards" << endl;
 			}
 		}
-
-
-
-		// ===== PARTIE 3 =====
-		// Variation du taux d'attaque
-		//Affichage des resultats
-
-
-
-
-		//Gestion affichage pour les Renards 
-		if (extinction_renard == true)
-		{
-			cout << "Les renards ont été en voie d'extinction" << endl;
-			if (remonte_renard == true) {
-				cout << "mais la population est remontée ! Ouf !" << endl;
-			}
-		}
-		if (disparition_renard == true)
-		{
-			cout << "et les renards ont disparu :-(" << endl;
-		}
-
-		//Gestion affichage pour les Lapins
-		if (extinction_lapin == true)
-		{
-			cout << "Les lapins ont été en voie d'extinction" << endl;
-			if (remonte_lapin == true)
-			{
-				cout << "mais la population est remontée ! Ouf !" << endl;
-			}
-		}
-
-		if (disparition_lapin)
-		{
-			cout << "et les lapins ont disparu :-(" << endl;
-		}
-
-		if (extinction_renard == false and remonte_renard == false and remonte_renard == false and extinction_lapin == false and remonte_lapin == false and disparition_lapin == false)
-		{
-			cout << "Les lapins et les renards ont des populations stables." << endl;
+	//Gestion affichage pour les Renards 
+	if (extinction_renard == true)
+	{
+		cout << "Les renards ont été en voie d'extinction" << endl;
+		if (remonte_renard == true) {
+			cout << "mais la population est remontée ! Ouf !" << endl;
 		}
 	}
+	if (disparition_renard == true)
+	{
+		cout << "et les renards ont disparu :-(" << endl;
+	}
+
+	//Gestion affichage pour les Lapins
+	if (extinction_lapin == true)
+	{
+		cout << "Les lapins ont été en voie d'extinction" << endl;
+		if (remonte_lapin == true)
+		{
+			cout << "mais la population est remontée ! Ouf !" << endl;
+		}
+	}
+
+	if (disparition_lapin)
+	{
+		cout << "et les lapins ont disparu :-(" << endl;
+	}
+
+	if (extinction_renard == false and remonte_renard == false and remonte_renard == false and extinction_lapin == false and remonte_lapin == false and disparition_lapin == false)
+	{
+		cout << "Les lapins et les renards ont des populations stables." << endl;
+	}
+}
 
 	/*******************************************
 	 * Ne rien modifier aprÃ¨s cette ligne.
