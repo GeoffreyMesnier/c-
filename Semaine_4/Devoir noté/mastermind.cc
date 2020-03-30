@@ -97,157 +97,163 @@ void message_perdu(char c1, char c2, char c3, char c4)
 // ======================================================================
 bool couleur_valide(char c)
 {
-	bool resultat(false);
-	
-  if ( c =='.' or c == 'R' or c== 'G' or c== 'B' or c=='C' or c=='Y' or c=='M')
-  {
-	  resultat=true;
-  }
-  return resultat;
+    bool resultat(false);
+
+    if (c == '.' or c == 'R' or c == 'G' or c == 'B' or c == 'C' or c == 'Y' or c == 'M')
+    {
+        resultat = true;
+    }
+    return resultat;
 }
 
 
 
 // ======================================================================
-bool verifier(char couleur_recu,char& couleur_ref,int& scorever)
-{   
-	bool resultat(false);
-	if(couleur_recu==couleur_ref)
-	{
-		++scorever;
-		couleur_ref='x';
-		resultat=true;
-    } 
+bool verifier(char couleur_recu, char& couleur_ref, int& scorever)
+{
+    bool resultat(false);
+    if (couleur_recu == couleur_ref)
+    {
+        ++scorever;
+        couleur_ref = 'x';
+        resultat = true;
+    }
     return resultat;
 }
 
 
 // ======================================================================
-void apparier(char couleur_recu,char& coulref1,char& coulref2,char& coulref3,int& scoreapp)
-{ 
-	bool resultat;
-	resultat=verifier(couleur_recu,coulref1,scoreapp);
-	if (resultat == false)
-	{
-		resultat=verifier(couleur_recu,coulref2,scoreapp);
-		if (resultat == false)
-		{
-			verifier(couleur_recu,coulref3,scoreapp);
-	    }
+void apparier(char couleur_recu, char& coulref1, char& coulref2, char& coulref3, int& scoreapp)
+{
+    bool resultat;
+    resultat = verifier(couleur_recu, coulref1, scoreapp);
+    if (resultat == false)
+    {
+        resultat = verifier(couleur_recu, coulref2, scoreapp);
+        if (resultat == false)
+        {
+            verifier(couleur_recu, coulref3, scoreapp);
+        }
     }
-	
+
 }
 
 
 // ======================================================================
 void afficher_reponses(char c1, char c2, char c3, char c4,
-                       char r1, char r2, char r3, char r4)
+    char r1, char r2, char r3, char r4)
 {
-	int nb_exact(0);
-	int nb_place(0);
-	int nb_reste(0);
-	
-	//Combinaison exact
-	//test combinaison exacte 1
-	if (c1 == r1)
-	{
-		c1='y';
-		++nb_exact;
+    int nb_exact(0);
+    int nb_place(0);
+    int nb_reste(0);
+
+    //Combinaison exact
+    //test combinaison exacte 1
+    if (c1 == r1)
+    {
+        c1 = 'y';
+        r1 = 'y';
+        ++nb_exact;
     }
-    
+
     //test combinaison exacte 2
-	if (c2 == r2)
-	{
-		c2='y';
-		++nb_exact;
+    if (c2 == r2)
+    {
+        c2 = 'y';
+        r2 = 'y';
+        ++nb_exact;
     }
-        //test combinaison exacte 3
-	if (c3 == r3)
-	{
-		c3='y';
-		++nb_exact;
+    //test combinaison exacte 3
+    if (c3 == r3)
+    {
+        c3 = 'y';
+        r3 = 'y';
+        ++nb_exact;
     }
-        //test combinaison exacte 4
-	if (c4 == r4)
-	{
-		c4='y';
-		++nb_exact;
+    //test combinaison exacte 4
+    if (c4 == r4)
+    {
+        c4 = 'y';
+        r4 = 'y';
+        ++nb_exact;
     }
     //Combinaison placé 1
     if (c1 != 'y')
     {
-		apparier(c1,r2,r3,r4,nb_place);
+        apparier(c1, r2, r3, r4, nb_place);
     }
     //Combinaison placé 2
     if (c2 != 'y')
     {
-		apparier(c2,r1,r3,r4,nb_place);
+        apparier(c2, r1, r3, r4, nb_place);
     }
-    
+
     //Combinaison placé 3
     if (c3 != 'y')
     {
-		apparier(c3,r1,r2,r4,nb_place);
+        apparier(c3, r1, r2, r4, nb_place);
     }
-    
+
     //combinaison placé 4
     if (c4 != 'y')
     {
-		apparier(c4,r1,r2,r3,nb_place);
+        apparier(c4, r1, r2, r3, nb_place);
     }
-    nb_reste=4-nb_exact-nb_place;
-    afficher(nb_exact,'#');
-    afficher(nb_place,'+');
-    afficher(nb_reste,'-');
+    nb_reste = 4 - nb_exact - nb_place;
+    afficher(nb_exact, '#');
+    afficher(nb_place, '+');
+    afficher(nb_reste, '-');
 }
 
 // ======================================================================
 bool gagne(char c1, char c2, char c3, char c4,
-           char r1, char r2, char r3, char r4)
+    char r1, char r2, char r3, char r4)
 {
-	bool resultat(false);
-	if (c1 == r1 and c2 == r2 and c3 == r3 and c4 == r4)
-	{
-		resultat=true;
-	}
-	return resultat;
+    bool resultat(false);
+    if (c1 == r1 and c2 == r2 and c3 == r3 and c4 == r4)
+    {
+        resultat = true;
+    }
+    return resultat;
 }
 
 // ======================================================================
-void jouer(int nbmax=8)
+void jouer(int nbmax = 8)
 {
-	//tirage au sort de la combinaison
-	char r1(tirer_couleur());
-	char r2(tirer_couleur());
-	char r3(tirer_couleur());
-	char r4(tirer_couleur());
-	char c1;
-	char c2;
-	char c3;
-	char c4;
-	int nb_coup(0);
-	//boucle de jeux
-	do{
-	   nb_coup++;
-	   
-	   c1=lire_couleur();
-	   c2=lire_couleur();
-	   c3=lire_couleur();
-	   c4=lire_couleur();
-	   
-	   afficher_coup(c1,c2,c3,c4,r1,r2,r3,r4);
-	   	
-		
-    }while(not gagne(c1,c2,c3,c4,r1,r2,r3,r4) and nb_coup < nbmax-1);
-    
-    if (nb_coup>nbmax-1)
+    //tirage au sort de la combinaison
+    char c1(tirer_couleur());
+    char c2(tirer_couleur());
+    char c3(tirer_couleur());
+    char c4(tirer_couleur());
+
+    //Initialisation des réponses
+    char r1;
+    char r2;
+    char r3;
+    char r4;
+    int nb_coup(0);
+    //boucle de jeux
+    do {
+        nb_coup++;
+
+        r1 = lire_couleur();
+        r2 = lire_couleur();
+        r3 = lire_couleur();
+        r4 = lire_couleur();
+
+        afficher_coup(c1, c2, c3, c4, r1, r2, r3, r4);
+
+
+    } while (not gagne(c1, c2, c3, c4, r1, r2, r3, r4) and nb_coup < nbmax - 1);
+
+    if (nb_coup > nbmax - 1)
     {
-		message_perdu(r1,r2,r3,r4);
-	}
-	else
-	{
-		message_gagne(nb_coup);
-	}	
+        message_perdu(r1, r2, r3, r4);
+    }
+    else
+    {
+        message_gagne(nb_coup);
+    }
 }
 
 /*******************************************
@@ -256,6 +262,6 @@ void jouer(int nbmax=8)
 
 int main()
 {
-  jouer();
-  return 0;
+    jouer();
+    return 0;
 }
