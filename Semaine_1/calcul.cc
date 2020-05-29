@@ -12,12 +12,11 @@ int main()
 	c=x*y;
 	d=x/y;
 	
-	cout << x << "+" << y <<"="<< a << endl;
+	cout << x << "+" << y << "=" << a << endl;
 	cout << b << endl;
 	cout << c << endl;
 	cout << d << endl;
-	
-	
+
 	return 0;
 }
 
