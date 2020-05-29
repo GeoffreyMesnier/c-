@@ -13,7 +13,6 @@ int main()
 	annee=annee_en_cours - age;
 	
 	cout << "Votre annee de naissance est : " << annee << endl;
-	return 0;
-		
+	return 0;		
 }
 
