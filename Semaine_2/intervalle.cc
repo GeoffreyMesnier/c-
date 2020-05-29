@@ -21,9 +21,7 @@ int main()
 		else{
 			cout << "x n'appartient pas à I" << endl;
 		}
-		
-	}
-		
+	}		
 	return 0;
 }
 
